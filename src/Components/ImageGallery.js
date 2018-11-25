@@ -66,7 +66,11 @@ export default class ImageGallery extends Component {
         });
 
         if (e.target.value === "") {
-            this.setState({images:[],numOfPages:0,page:1})
+            this.setState({
+                images: [],
+                numOfPages: 0,
+                page: 1
+            })
         }
 
         else {
