@@ -24,7 +24,7 @@ export default class ImagesArea extends Component {
                                 <div key={index}>
                                     <img className="photo" src={this.getImageURL(photo)} />
                                 </div>)
-                            : <div>Loading...</div>
+                            : <div></div>
                     }
                 {/* </PerfectScrollbar> */}
             </div >

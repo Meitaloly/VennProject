@@ -5,7 +5,7 @@ import ImageGallery from './Components/ImageGallery'
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App" id="MainApp">
         <ImageGallery />
       </div>
     );
