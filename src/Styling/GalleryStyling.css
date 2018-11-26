@@ -1,0 +1,39 @@
+body {
+    background-image: linear-gradient(to bottom right, red, yellow);
+}
+
+.loader{
+    flex: flex-wrap;
+    justify-content: center;
+    margin-left: 50%;
+}
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  .wrap    { 
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }  
+
+  .flex-item {
+    border-radius: 15px;
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+    margin: 10px;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+  }

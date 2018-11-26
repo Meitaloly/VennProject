@@ -16,17 +16,15 @@ export default class ImagesArea extends Component {
     render() {
         const { images } = this.props;
         return (
-            <div>
-                {/* <PerfectScrollbar onYReachEnd={()=>console.log("end of page!")}> */}
-                    {
-                        images&&images.length ?
-                            images.map((photo, index) =>
-                                <div key={index}>
-                                    <img className="photo" src={this.getImageURL(photo)} />
-                                </div>)
-                            : <div></div>
-                    }
-                {/* </PerfectScrollbar> */}
+            <div className="photosContainer flex-container wrap">
+                {
+                    images && images.length ?
+                        images.map((photo, index) =>
+                            <div key={index}>
+                                <img className="flex-item" src={this.getImageURL(photo)} />
+                            </div>)
+                        : <div></div>
+                }
             </div >
         )
     }

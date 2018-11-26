@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ImagesArea from './ImagesArea';
-
+import ReactLoading from "react-loading";
+import './../Styling/GalleryStyling.css';
 
 const getImages = (searchTerm, pageNumber, photosPerPage) => {
     return new Promise((resolve, reject) => {
@@ -25,7 +26,6 @@ export default class ImageGallery extends Component {
             perPage: 20,
             numOfPages: 0,
         }
-        // this.changeNumOfPhotosPerPage = this.changeNumOfPhotosPerPage.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.isBottom = this.isBottom.bind(this);
     }
@@ -80,13 +80,6 @@ export default class ImageGallery extends Component {
         }
     }
 
-    // changeNumOfPhotosPerPage(e) {
-    //     this.setState({ perPage: e.target.value });
-    //     getImages(this.state.searchText, this.state.page, this.state.perPage)
-    //     .then(res => this.setState({ images: res.data.photos.photo, numOfPages: res.data.photos.pages }))
-    //     .catch(err => console.log(err));
-    // }
-
     // render the app
     render() {
         return (
@@ -100,15 +93,17 @@ export default class ImageGallery extends Component {
                         <span className="searchDataText"> Your text: </span>
                         <input className="searchInput" type="text" value={this.state.searchText} onChange={this.handleTextChange} />
 
-                        {/* // <span className="searchDataText">photos per page: </span> */}
-                        {/* // <input type="number" value={this.state.perPage} onChange={this.changeNumOfPhotosPerPage} min="10" /> */}
                     </div>
                 </div>
 
                 <ImagesArea images={this.state.images} />
-                <div className="endOfPage" hidden={this.state.page < this.state.numOfPages}>
+
+                <ReactLoading className="loader" hidden={(this.state.page + 1 > this.state.numOfPages) || (this.state.numOfPages === 0)} type={"spinningBubbles"} color="" />
+
+                <div className="endOfPageMsg" hidden={this.state.page < this.state.numOfPages}>
                     There are no more photos for your search
                  </div>
+
             </div>
         )
     }
