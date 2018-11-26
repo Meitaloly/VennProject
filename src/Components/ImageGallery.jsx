@@ -4,15 +4,20 @@ import ImagesArea from './ImagesArea';
 import ReactLoading from "react-loading";
 import './../Styling/GalleryStyling.css';
 
+// const getImages = (searchTerm, pageNumber, photosPerPage) => {
+//     return new Promise((resolve, reject) => {
+//         searchTerm && searchTerm !== ""
+//             ? axios
+//                 .get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&format=json&nojsoncallback=1&api_key=bac9f1ccfd854f27894fd47c4f01b1e8&text=${searchTerm}&per_page=${photosPerPage}&page=${pageNumber}&content_type=1&is_getty=1`)
+//                 .then(result => resolve(result))
+//                 .catch(err => reject(err))
+//             : resolve([]);
+//     })
+// };
+
 const getImages = (searchTerm, pageNumber, photosPerPage) => {
-    return new Promise((resolve, reject) => {
-        searchTerm && searchTerm !== ""
-            ? axios
-                .get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&format=json&nojsoncallback=1&api_key=bac9f1ccfd854f27894fd47c4f01b1e8&text=${searchTerm}&per_page=${photosPerPage}&page=${pageNumber}&content_type=1&is_getty=1`)
-                .then(result => resolve(result))
-                .catch(err => reject(err))
-            : resolve([]);
-    })
+    return axios
+    .get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&format=json&nojsoncallback=1&api_key=bac9f1ccfd854f27894fd47c4f01b1e8&text=${searchTerm}&per_page=${photosPerPage}&page=${pageNumber}&content_type=1&is_getty=1`)
 };
 
 export default class ImageGallery extends Component {
@@ -51,7 +56,7 @@ export default class ImageGallery extends Component {
             console.log('numOfPages = ' + this.state.numOfPages);
             if (pageCounter <= this.state.numOfPages) {
                 this.setState({ page: pageCounter });
-                getImages(this.state.searchText, this.state.page, this.state.perPage)
+                getImages(this.state.searchText, pageCounter, this.state.perPage)
                     .then(res => this.setState({ images: [...this.state.images, ...res.data.photos.photo] }))
                     .catch(err => console.log(err));
             }
@@ -74,7 +79,7 @@ export default class ImageGallery extends Component {
         }
 
         else {
-            getImages(e.target.value, this.state.page, this.state.perPage)
+            getImages(e.target.value, 1, this.state.perPage)
                 .then(res => this.setState({ images: res.data.photos.photo, numOfPages: res.data.photos.pages }))
                 .catch(err => console.log(err));
         }
@@ -85,9 +90,9 @@ export default class ImageGallery extends Component {
         return (
             <div className="imageGalleryContainer">
                 <div className="headerContainer">
-                    <div className="pageTitle">
+                    <h1 className="pageTitle">
                         Image Gallery
-                        </div>
+                        </h1>
                     <div className="searchData">
 
                         <span className="searchDataText"> Your text: </span>
@@ -98,12 +103,11 @@ export default class ImageGallery extends Component {
 
                 <ImagesArea images={this.state.images} />
 
-                <ReactLoading className="loader" hidden={(this.state.page + 1 > this.state.numOfPages) || (this.state.numOfPages === 0)} type={"spinningBubbles"} color="" />
+                <ReactLoading className="loader" hidden={(this.state.page + 1 > this.state.numOfPages) || (this.state.numOfPages <= 1) } type={"spinningBubbles"} color="#fff" />
 
                 <div className="endOfPageMsg" hidden={this.state.page < this.state.numOfPages}>
                     There are no more photos for your search
                  </div>
-
             </div>
         )
     }
