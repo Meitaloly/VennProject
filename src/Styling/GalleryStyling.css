@@ -39,9 +39,6 @@ body {
     display: flex;
   }
 
-  .pageTitle{
-  }
-
   .wrap    { 
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
