@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import 'react-perfect-scrollbar/dist/css/styles.css';
 
     export default class ImagesArea extends Component {
 
@@ -15,7 +14,6 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 
     render() {
         const { images } = this.props;
-        console.log(images);
         return (
             <div className="photosContainer flex-container wrap">
                 {

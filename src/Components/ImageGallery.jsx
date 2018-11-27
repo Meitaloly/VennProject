@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import debounce from 'debounce'
 import ImagesArea from './ImagesArea';
 import ReactLoading from "react-loading";
 import './../Styling/GalleryStyling.css';
-import debounce from 'debounce'
 
 //api request
 const getImages = (searchTerm, pageNumber, photosPerPage) => {
@@ -17,7 +17,7 @@ export default class ImageGallery extends Component {
         super(props);
         this.state = {
             searchText: "",
-            images: [],
+            images: [], 
             page: 1,
             perPage: 20,
             numOfPages: 0,
@@ -57,8 +57,6 @@ export default class ImageGallery extends Component {
     // update the text in state +
     // check if text isn't empty and call 'getImage' function for the api request
     handleTextChange(value) {
-
-        console.log("text: " +value);
         this.setState({
             searchText: value,
             page: 1
@@ -90,7 +88,6 @@ export default class ImageGallery extends Component {
                     <div className="searchData">
 
                         <span className="searchDataText"> Your text: </span>
-                        {/* <input className="searchInput" type="text" value={this.state.searchText} onChange={this.handleTextChange} /> */}
                         <input className="searchInput" type="text" placeholder="Search your image" onChange={e=>this.handleTextChange(e.target.value)} />
 
                     </div>
