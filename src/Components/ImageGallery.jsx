@@ -3,6 +3,7 @@ import axios from 'axios'
 import ImagesArea from './ImagesArea';
 import ReactLoading from "react-loading";
 import './../Styling/GalleryStyling.css';
+import debounce from 'debounce'
 
 //api request
 const getImages = (searchTerm, pageNumber, photosPerPage) => {
@@ -21,13 +22,13 @@ export default class ImageGallery extends Component {
             perPage: 20,
             numOfPages: 0,
         }
-        this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleTextChange = debounce(this.handleTextChange,500);
         this.isBottom = this.isBottom.bind(this);
     }
 
 
     isBottom(el) {
-        return el.getBoundingClientRect().bottom <= (window.innerHeight + 1);
+        return el.getBoundingClientRect().bottom <= (window.innerHeight);
     }
 
     componentDidMount() {
@@ -55,15 +56,15 @@ export default class ImageGallery extends Component {
 
     // update the text in state +
     // check if text isn't empty and call 'getImage' function for the api request
-    handleTextChange(e) {
+    handleTextChange(value) {
 
-        console.log("text: " + e.target.value);
+        console.log("text: " +value);
         this.setState({
-            searchText: e.target.value,
+            searchText: value,
             page: 1
         });
 
-        if (e.target.value === "") {
+        if (value === "") {
             this.setState({
                 images: [],
                 numOfPages: 0,
@@ -72,7 +73,7 @@ export default class ImageGallery extends Component {
 
         else {
 
-            getImages(e.target.value, 1, this.state.perPage)
+            getImages(value, 1, this.state.perPage)
                 .then(res => this.setState({ images: res.data.photos.photo, numOfPages: res.data.photos.pages }))
                 .catch(err => console.log(err));
         }
@@ -90,7 +91,7 @@ export default class ImageGallery extends Component {
 
                         <span className="searchDataText"> Your text: </span>
                         {/* <input className="searchInput" type="text" value={this.state.searchText} onChange={this.handleTextChange} /> */}
-                        <input className="searchInput" type="text" onChange={this.handleTextChange} />
+                        <input className="searchInput" type="text" placeholder="Search your image" onChange={e=>this.handleTextChange(e.target.value)} />
 
                     </div>
                 </div>
@@ -106,3 +107,4 @@ export default class ImageGallery extends Component {
         )
     }
 }
+
